@@ -1,0 +1,5 @@
+name = New module
+description = This is a new module to add a menu link and print hello everyone on the page.
+package = Custom module
+core = 7.x
+files[] = newmodule.module

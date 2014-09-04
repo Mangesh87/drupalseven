@@ -1,0 +1,54 @@
+<?php 
+
+/**
+ * @file
+ * A custom module to learn
+ *
+ * This module provides a menu link and prints on the page
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function newmodule_menu() {
+  $items['admin/mylink'] = array(
+    'title'           => 'My Link',
+    'page callback'   => 'newmodule_mylink_callback',
+    'access callback' => TRUE,
+    'type'	      => MENU_NORMAL_ITEM
+  );
+  $items['admin/mylink/linkone'] = array(
+    'title'           => 'My Sub Link',
+    'page callback'   => 'newmodule_mysublink_callback',
+    'access callback' => TRUE,
+    'type'	      => MENU_NORMAL_ITEM
+  );
+  return $items;
+}
+
+function newmodule_mylink_callback() {
+global $user;
+$userId = $user->uid;
+  if(user_is_anonymous()){
+    drupal_goto('node/20');
+  } else {
+    drupal_goto('admin/mylink/linkone');
+  }
+}
+
+function newmodule_form_alter(&$form, $form_state, $form_id){
+
+  if ($form_id == 'user_login') {
+    drupal_set_title(t('I have altered this form'));
+    $form['name']['#title'] = 'Username is required';
+    $form['name']['#description'] = 'Please enter your own username.';   
+    $form['pass']['#title'] = 'Password is required';
+    $form['pass']['#description'] = 'Please enter your own password.';   
+  }
+
+}
+
+function newmodule_mysublink_callback(){
+
+	return 'My Sub Menu was hit';
+}
